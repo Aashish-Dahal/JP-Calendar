@@ -20,7 +20,7 @@ class MonthPicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final selectedDayChangeNotifier = ValueNotifier<int>(0);
+    final selectedDayChangeNotifier = ValueNotifier<int?>(null);
     final selectedMonthChangeNotifier = ValueNotifier<int>(0);
 
     return Column(

@@ -4,6 +4,8 @@ import 'package:scroll_to_index/scroll_to_index.dart';
 import '../../utils/constants.dart';
 import '../widgets/day_year_button.dart';
 
+final selectedYearNotifier = ValueNotifier<int?>(null);
+
 class YearPicker extends StatefulWidget {
   final String initialYear;
   final String initialYearType;
@@ -23,7 +25,6 @@ class YearPicker extends StatefulWidget {
 }
 
 class _YearPickerState extends State<YearPicker> {
-  final selectedYearNotifier = ValueNotifier<int?>(null);
   late final AutoScrollController _scrollController;
 
   @override
