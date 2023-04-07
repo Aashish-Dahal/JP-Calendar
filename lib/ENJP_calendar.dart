@@ -77,7 +77,6 @@ class _ENJPDateTimePickerState extends State<ENJPDateTimePicker> {
                       }),
                   Divider(
                     height: 0,
-                    thickness: 1,
                     color: Theme.of(context).dividerTheme.color,
                   ),
                   Flexible(
@@ -104,7 +103,6 @@ class _ENJPDateTimePickerState extends State<ENJPDateTimePicker> {
                   ),
                   Divider(
                     height: 0,
-                    thickness: 1,
                     color: Theme.of(context).dividerTheme.color,
                   ),
                   CancelOkButton(
