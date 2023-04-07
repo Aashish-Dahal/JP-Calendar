@@ -9,23 +9,29 @@ import 'package:jp_calendar/src/package/year/year_header.dart';
 import 'package:jp_calendar/src/package/year/year_picker.dart' as ENJP;
 import 'package:jp_calendar/src/utils/constants.dart';
 
-class ENJPDateTimePicker extends StatefulWidget {
+class JPDateTimePicker extends StatefulWidget {
+  final String initialYearType;
+  final String initialYearValue;
   final String languageCode;
   final DateTimeCallback dateTimeCallback;
 
-  const ENJPDateTimePicker(
-      {super.key, required this.dateTimeCallback, this.languageCode = "en"});
+  const JPDateTimePicker(
+      {super.key,
+      required this.dateTimeCallback,
+      this.languageCode = "en",
+      this.initialYearType = YearType.english,
+      this.initialYearValue = ''});
 
   @override
-  State<ENJPDateTimePicker> createState() => _ENJPDateTimePickerState();
+  State<JPDateTimePicker> createState() => _JPDateTimePickerState();
 }
 
-class _ENJPDateTimePickerState extends State<ENJPDateTimePicker> {
+class _JPDateTimePickerState extends State<JPDateTimePicker> {
   final headerNotifier = ValueNotifier<int>(0);
   final dayTimeListener = ValueNotifier<List<int>>([]);
   final monthListener = ValueNotifier<int>(0);
   late final PageController _monthPageController;
-  final dropDownJPERaListener = ValueNotifier<String>(YearType.english);
+  late final ValueNotifier<String> dropDownJPERaListener;
   final selectedYearListener =
       ValueNotifier<String>(DateTime.now().year.toString());
   late final PageController _pageController;
@@ -35,6 +41,7 @@ class _ENJPDateTimePickerState extends State<ENJPDateTimePicker> {
     YearFactory.getYears();
     _monthPageController = PageController(initialPage: 0);
     _pageController = PageController(initialPage: 0);
+    dropDownJPERaListener = ValueNotifier<String>(widget.initialYearType);
     super.initState();
   }
 
@@ -90,6 +97,8 @@ class _ENJPDateTimePickerState extends State<ENJPDateTimePicker> {
                       physics: const NeverScrollableScrollPhysics(),
                       children: [
                         ENJP.YearPicker(
+                          initialYear: widget.initialYearValue,
+                          initialYearType: widget.initialYearType,
                           jpEnYearNotifier: dropDownJPERaListener,
                           onYearChanged: (year) {
                             _pageController.jumpToPage(1);

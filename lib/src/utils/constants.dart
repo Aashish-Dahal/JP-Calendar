@@ -40,16 +40,16 @@ class YearFactory {
     final now = DateTime.now().year;
 
     final englishYears =
-        List.generate(now - 1950, (i) => Year(i + 1950, YearType.english));
+        List.generate(now - 1950 + 1, (i) => Year(i + 1950, YearType.english));
 
     final showaYears =
-        List.generate(1989 - 1926, (i) => Year(i + 1926, YearType.showa));
+        List.generate(1989 - 1927 + 1, (i) => Year(i + 1926, YearType.showa));
 
     final heiseiYears =
-        List.generate(2018 - 1989, (i) => Year(i + 1989, YearType.heisei));
+        List.generate(2019 - 1989 + 1, (i) => Year(i + 1989, YearType.heisei));
 
     final reiwaYears =
-        List.generate(now - 2018, (i) => Year(i + 2019, YearType.reiwa));
+        List.generate(now - 2019 + 1, (i) => Year(i + 2019, YearType.reiwa));
 
     return [
       ...englishYears,
@@ -141,21 +141,26 @@ class YearFactory {
     }
   }
 
-  static int getInitialYearIndex(String year, String yearType) {
-    final splitYear = year.split('/')[0];
+  static int getSelectedYearIndex(String year, String yearType) {
     switch (yearType) {
       case YearType.english:
-        return YearFactory.getYears().indexWhere(
-            (y) => y.type == YearType.english && y.year.toString() == year);
+        return YearFactory.getYears()
+            .indexWhere((y) => y.year.toString() == year);
       case YearType.showa:
-        return YearFactory.getYears().indexWhere(
-            (y) => y.type == YearType.showa && y.year.toString() == splitYear);
+        final showaYears = YearFactory.getYears()
+            .where((year) => year.type == YearType.showa)
+            .toList();
+        return showaYears.indexWhere((y) => y.year.toString() == year);
       case YearType.reiwa:
-        return YearFactory.getYears().indexWhere(
-            (y) => y.type == YearType.reiwa && y.year.toString() == splitYear);
+        final reiwaYears = YearFactory.getYears()
+            .where((year) => year.type == YearType.reiwa)
+            .toList();
+        return reiwaYears.indexWhere((y) => y.year.toString() == year);
       case YearType.heisei:
-        return YearFactory.getYears().indexWhere(
-            (y) => y.type == YearType.heisei && y.year.toString() == splitYear);
+        final heiseiYears = YearFactory.getYears()
+            .where((year) => year.type == YearType.heisei)
+            .toList();
+        return heiseiYears.indexWhere((y) => y.year.toString() == year);
       default:
         throw ArgumentError('Invalid YearType');
     }
@@ -323,11 +328,10 @@ String getMonthName(int id) {
 }
 
 String getSelectedDateTime(String year, List dateTime, [String? languageCode]) {
-  final splitYear = year.split("-").last;
   if (languageCode == "ja") {
-    return "$splitYear年${dateTime[1]}月${dateTime[0]}日";
+    return "$year年${dateTime[1]}月${dateTime[0]}日";
   }
-  return "$splitYear/${dateTime[1]}/${dateTime[0]}";
+  return "$year/${dateTime[1]}/${dateTime[0]}";
 }
 
 String getSelectedYearMonth(String year, int month, [String? languageCode]) {
