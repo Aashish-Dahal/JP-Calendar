@@ -29,7 +29,7 @@ class CalendarHeader extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            languageCode == "en" ? "日付の選択" : "select date".toUpperCase(),
+            languageCode == "en" ? "select date".toUpperCase() : "日付の選択",
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   fontSize: 14,
                   color: Colors.white,
