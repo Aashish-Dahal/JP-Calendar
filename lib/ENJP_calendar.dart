@@ -56,7 +56,7 @@ class _ENJPDateTimePickerState extends State<ENJPDateTimePicker> {
             ),
             Container(
               margin: EdgeInsets.zero,
-              height: 390,
+              height: 405,
               color: Colors.white,
               child: Column(
                 children: [
@@ -75,7 +75,9 @@ class _ENJPDateTimePickerState extends State<ENJPDateTimePicker> {
                                 monthListener: monthListener,
                                 monthSwitchController: _monthPageController);
                       }),
-                  const Divider(),
+                  Divider(
+                    color: Theme.of(context).dividerTheme.color,
+                  ),
                   Flexible(
                     child: PageView(
                       controller: _pageController,
@@ -98,7 +100,11 @@ class _ENJPDateTimePickerState extends State<ENJPDateTimePicker> {
                       ],
                     ),
                   ),
-                  const Divider(),
+                  Divider(
+                    height: 0,
+                    thickness: 1,
+                    color: Theme.of(context).dividerTheme.color,
+                  ),
                   CancelOkButton(
                     onSubmit: () {
                       if (headerNotifier.value == 1) {
