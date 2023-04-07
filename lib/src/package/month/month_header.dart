@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../../utils/constants.dart';
 
 class MonthHeader extends StatelessWidget {
+  final String languageCode;
+
   final VoidCallback onPressed;
   final PageController monthSwitchController;
   final ValueNotifier<int> monthListener;
@@ -10,6 +12,7 @@ class MonthHeader extends StatelessWidget {
 
   const MonthHeader(
       {super.key,
+      this.languageCode = "en",
       required this.monthListener,
       required this.yearListener,
       required this.onPressed,
@@ -31,7 +34,7 @@ class MonthHeader extends StatelessWidget {
                   return InkWell(
                     onTap: onPressed,
                     child: Text(
-                      getSelectedYearMonth(year, month),
+                      getSelectedYearMonth(year, month, languageCode),
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                             fontSize: 16,
                           ),

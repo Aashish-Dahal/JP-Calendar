@@ -4,6 +4,7 @@ import '../../utils/constants.dart';
 import '../widgets/day_year_button.dart';
 
 class MonthPicker extends StatelessWidget {
+  final String languageCode;
   final ValueNotifier<String> yearNotifier;
   final ValueNotifier<int> monthNotifier;
   final PageController pageController;
@@ -11,6 +12,7 @@ class MonthPicker extends StatelessWidget {
   final ValueNotifier<List<int>> dayTimeNotifier;
   const MonthPicker(
       {super.key,
+      this.languageCode = "en",
       required this.dayTimeNotifier,
       required this.yearNotifier,
       required this.monthNotifier,
@@ -33,7 +35,7 @@ class MonthPicker extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: List.generate(
-              days.length,
+              languageCode == "en" ? days.length : jpDays.length,
               (i) => Text(
                 days[i].name[0],
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(

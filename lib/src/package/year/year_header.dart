@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 import '../../utils/constants.dart';
 
 class YearHeader extends StatelessWidget {
+  final String languageCode;
   final ValueNotifier<String> dropDownJPERaListener;
 
-  const YearHeader({super.key, required this.dropDownJPERaListener});
+  const YearHeader(
+      {super.key,
+      required this.dropDownJPERaListener,
+      this.languageCode = "en"});
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +23,7 @@ class YearHeader extends StatelessWidget {
               dropDownJPERaListener.value = YearType.english;
             },
             child: Text(
-              "Current Date",
-              // context.locale == const Locale("ja")
-              //     ? "$currentYear年$currentMonth月"
-              //     : "${DateFormat.MMMM().format(DateTime.now())}, ${DateTime.now().year.toString()}",
+              getCurrentYearMonth(languageCode),
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     fontSize: 16,
                   ),

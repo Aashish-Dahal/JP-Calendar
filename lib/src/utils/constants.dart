@@ -227,6 +227,17 @@ List<DayMonth> days = [
   DayMonth(name: "Fri", id: 6),
   DayMonth(name: "Sat", id: 7),
 ];
+// Name of List of the days of the week
+
+List<DayMonth> jpDays = [
+  DayMonth(name: "日", id: 1),
+  DayMonth(name: "月", id: 2),
+  DayMonth(name: "火", id: 3),
+  DayMonth(name: "水", id: 4),
+  DayMonth(name: "木", id: 5),
+  DayMonth(name: "金", id: 6),
+  DayMonth(name: "土", id: 7),
+];
 
 extension DateTimeExtension on DateTime {
   String? weekdayName() {
@@ -245,6 +256,10 @@ extension DateTimeExtension on DateTime {
 
 String getDayName(int id) {
   return days.firstWhere((day) => day.id == id).name;
+}
+
+String getJPDayName(int id) {
+  return jpDays.firstWhere((day) => day.id == id).name;
 }
 
 // Returns the weekDay of the given day
@@ -319,7 +334,13 @@ String getSelectedYearMonthDay(List dateTime, [String? languageCode]) {
     }
   }
   if (languageCode == "ja") {
-    return "${dateTime[1]}月${dateTime[0]}日(${getDayName(dateTime[2])})";
+    return "${dateTime[1]}月${dateTime[0]}日(${getJPDayName(dateTime[2])})";
   }
   return "${getDayName(dateTime[2])}, ${getMonthName(dateTime[1])} ${dateTime[0]}";
+}
+
+String getCurrentYearMonth([String? languageCode]) {
+  return languageCode == "ja"
+      ? "$currentYear年$currentMonth月"
+      : "${getMonthName(currentMonth)}, ${DateTime.now().year.toString()}";
 }
