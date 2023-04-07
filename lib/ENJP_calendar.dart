@@ -42,7 +42,7 @@ class _ENJPDateTimePickerState extends State<ENJPDateTimePicker> {
       backgroundColor: Colors.transparent,
       insetPadding: const EdgeInsets.all(30),
       child: Container(
-        height: 510,
+        height: 522,
         width: double.infinity,
         margin: EdgeInsets.zero,
         decoration: BoxDecoration(
@@ -76,6 +76,8 @@ class _ENJPDateTimePickerState extends State<ENJPDateTimePicker> {
                                 monthSwitchController: _monthPageController);
                       }),
                   Divider(
+                    height: 0,
+                    thickness: 1,
                     color: Theme.of(context).dividerTheme.color,
                   ),
                   Flexible(
