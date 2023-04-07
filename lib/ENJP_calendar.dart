@@ -55,7 +55,7 @@ class _ENJPDateTimePickerState extends State<ENJPDateTimePicker> {
               dateTimeListenable: dayTimeListener,
             ),
             Container(
-              height: 405,
+              height: 380,
               color: Colors.white,
               child: Column(
                 children: [
