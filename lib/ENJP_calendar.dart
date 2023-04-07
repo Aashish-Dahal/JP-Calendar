@@ -51,7 +51,7 @@ class _ENJPDateTimePickerState extends State<ENJPDateTimePicker> {
         child: Column(
           children: [
             CalendarHeader(
-              headerBackgroundColor: Colors.blue,
+              headerBackgroundColor: Theme.of(context).colorScheme.secondary,
               dateTimeListenable: dayTimeListener,
             ),
             Container(

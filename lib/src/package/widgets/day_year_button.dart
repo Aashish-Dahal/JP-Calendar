@@ -20,7 +20,8 @@ class DayYearButton extends StatelessWidget {
             ),
         foregroundColor: isSelected ? Colors.white : Colors.black,
         padding: EdgeInsets.zero,
-        backgroundColor: isSelected ? Colors.blue : null,
+        backgroundColor:
+            isSelected ? Theme.of(context).colorScheme.secondary : null,
       ),
       onPressed: onPressed,
       child: Text(
