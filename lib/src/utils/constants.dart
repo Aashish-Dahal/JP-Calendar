@@ -252,6 +252,19 @@ extension DateTimeExtension on DateTime {
     };
     return weekdayName[weekday];
   }
+
+  String? jpWeekdayName() {
+    Map<int, String> weekdayName = {
+      1: "月",
+      2: "火",
+      3: "水",
+      4: "木",
+      5: "金",
+      6: "土",
+      7: "日"
+    };
+    return weekdayName[weekday];
+  }
 }
 
 String getDayName(int id) {
@@ -328,7 +341,7 @@ String getSelectedYearMonth(String year, int month, [String? languageCode]) {
 String getSelectedYearMonthDay(List dateTime, [String? languageCode]) {
   if (dateTime.isEmpty) {
     if (languageCode == "ja") {
-      return "$currentMonth月$currentDay日(${DateTime.now().weekdayName()})";
+      return "$currentMonth月$currentDay日(${DateTime.now().jpWeekdayName()})";
     } else {
       return "${DateTime.now().weekdayName()}, ${getMonthName(currentMonth)} $currentDay";
     }

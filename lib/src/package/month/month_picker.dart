@@ -37,7 +37,7 @@ class MonthPicker extends StatelessWidget {
             children: List.generate(
               languageCode == "en" ? days.length : jpDays.length,
               (i) => Text(
-                days[i].name[0],
+                languageCode == "en" ? days[i].name[0] : jpDays[i].name,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       fontSize: 14,
                       color: Colors.grey,
