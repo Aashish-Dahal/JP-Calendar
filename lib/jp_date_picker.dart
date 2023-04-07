@@ -41,7 +41,9 @@ class _JPDateTimePickerState extends State<JPDateTimePicker> {
     YearFactory.getYears();
     _monthPageController = PageController(initialPage: 0);
     _pageController = PageController(initialPage: 0);
-    dropDownJPERaListener = ValueNotifier<String>(widget.initialYearType);
+    dropDownJPERaListener = ValueNotifier<String>(widget.initialYearType.isEmpty
+        ? YearType.english
+        : widget.initialYearType);
     super.initState();
   }
 
