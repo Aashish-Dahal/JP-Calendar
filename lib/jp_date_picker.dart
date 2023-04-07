@@ -125,11 +125,13 @@ class _JPDateTimePickerState extends State<JPDateTimePicker> {
                   CancelOkButton(
                     languageCode: widget.languageCode,
                     onSubmit: () {
-                      if (headerNotifier.value == 1) {
-                        widget.dateTimeCallback(getSelectedDateTime(
-                            selectedYearListener.value,
-                            dayTimeListener.value,
-                            widget.languageCode));
+                      if (dayTimeListener.value.isNotEmpty) {
+                        if (headerNotifier.value == 1) {
+                          widget.dateTimeCallback(getSelectedDateTime(
+                              selectedYearListener.value,
+                              dayTimeListener.value,
+                              widget.languageCode));
+                        }
                       }
                       Navigator.pop(context);
                     },
