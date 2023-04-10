@@ -96,6 +96,7 @@ class _JPDateTimePickerState extends State<JPDateTimePicker> {
                       physics: const NeverScrollableScrollPhysics(),
                       children: [
                         ENJP.YearPicker(
+                          languageCode: widget.languageCode,
                           initialValue: widget.initialValue,
                           jpEnYearNotifier: dropDownJPERaListener,
                           onYearChanged: (year) {

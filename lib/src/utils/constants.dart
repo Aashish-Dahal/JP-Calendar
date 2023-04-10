@@ -153,7 +153,6 @@ class YearFactory {
   static int getSelectedYearIndex(String year, [String? languageCode]) {
     String yearType = getDropDownInitialValue(year);
     String splitYear;
-
     if (languageCode == "en") {
       splitYear = year.split("/")[0];
     } else {

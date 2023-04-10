@@ -8,11 +8,13 @@ final selectedYearNotifier = ValueNotifier<int?>(null);
 
 class YearPicker extends StatefulWidget {
   final String initialValue;
+  final String languageCode;
   final YearCallback onYearChanged;
   final ValueNotifier<String> jpEnYearNotifier;
 
   const YearPicker({
     super.key,
+    this.languageCode = "en",
     required this.jpEnYearNotifier,
     required this.onYearChanged,
     this.initialValue = "",
@@ -30,7 +32,8 @@ class _YearPickerState extends State<YearPicker> {
     print(widget.initialValue);
     _scrollController = AutoScrollController();
     if (widget.initialValue.isNotEmpty) {
-      int index = YearFactory.getSelectedYearIndex(widget.initialValue);
+      int index = YearFactory.getSelectedYearIndex(
+          widget.initialValue, widget.languageCode);
       print(index);
       _scrollController.scrollToIndex(index);
       selectedYearNotifier.value = index;
