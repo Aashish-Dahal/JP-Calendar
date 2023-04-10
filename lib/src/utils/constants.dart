@@ -12,7 +12,7 @@ class YearType {
 
 // Get Japanese and english year
 class Year {
-  final int year;
+  final String year;
   final String type;
 
   Year(this.year, this.type);
@@ -23,11 +23,11 @@ class Year {
       case YearType.english:
         return year.toString();
       case YearType.showa:
-        return "$year-${YearType.showa}";
+        return year;
       case YearType.reiwa:
-        return "$year-${YearType.reiwa}";
+        return year;
       case YearType.heisei:
-        return "$year-${YearType.heisei}";
+        return year;
       default:
         throw ArgumentError('Invalid YearType');
     }
@@ -39,17 +39,19 @@ class YearFactory {
   static List<Year> getYears() {
     final now = DateTime.now().year;
 
-    final englishYears =
-        List.generate(now - 1950 + 1, (i) => Year(i + 1950, YearType.english));
+    final englishYears = List.generate(
+        now - 1950 + 1, (i) => Year("${i + 1950}", YearType.english));
 
-    final showaYears =
-        List.generate(1989 - 1927 + 1, (i) => Year(i + 1926, YearType.showa));
+    final showaYears = List.generate(1989 - 1927 + 1,
+        (i) => Year("${i + 1926}-${YearType.showa} ${i + 1}", YearType.showa));
 
-    final heiseiYears =
-        List.generate(2019 - 1989 + 1, (i) => Year(i + 1989, YearType.heisei));
+    final heiseiYears = List.generate(
+        2019 - 1989 + 1,
+        (i) =>
+            Year("${i + 1989}-${YearType.heisei} ${i + 1}", YearType.heisei));
 
-    final reiwaYears =
-        List.generate(now - 2019 + 1, (i) => Year(i + 2019, YearType.reiwa));
+    final reiwaYears = List.generate(now - 2019 + 1,
+        (i) => Year("${i + 2019}-${YearType.reiwa} ${i + 1}", YearType.reiwa));
 
     return [
       ...englishYears,
@@ -92,22 +94,25 @@ class YearFactory {
             .toString();
 
       case YearType.showa:
-        final showaYears = YearFactory.getYears()
+        return YearFactory.getYears()
             .where((year) => year.type == YearType.showa)
-            .toList();
-        return "${showaYears[i].type} ${i + 1}";
+            .toList()[i]
+            .toString()
+            .split("-")[1];
 
       case YearType.reiwa:
-        final reiwaYears = YearFactory.getYears()
+        return YearFactory.getYears()
             .where((year) => year.type == YearType.reiwa)
-            .toList();
-        return "${reiwaYears[i].type} ${i + 1}";
+            .toList()[i]
+            .toString()
+            .split("-")[1];
 
       case YearType.heisei:
-        final heiseiYears = YearFactory.getYears()
+        return YearFactory.getYears()
             .where((year) => year.type == YearType.heisei)
-            .toList();
-        return "${heiseiYears[i].type} ${i + 1}";
+            .toList()[i]
+            .toString()
+            .split("-")[1];
 
       default:
         throw ArgumentError('Invalid YearType');
@@ -121,49 +126,37 @@ class YearFactory {
             .where((year) => year.type == YearType.english)
             .toList()[i]
             .toString();
+
       case YearType.showa:
-        final showaYears = YearFactory.getYears()
+        return YearFactory.getYears()
             .where((year) => year.type == YearType.showa)
-            .toList();
-        return "${showaYears[i].year}-${showaYears[i].type} $i ";
+            .toList()[i]
+            .toString();
+
       case YearType.reiwa:
-        final reiwaYears = YearFactory.getYears()
+        return YearFactory.getYears()
             .where((year) => year.type == YearType.reiwa)
-            .toList();
-        return "${reiwaYears[i].year}-${reiwaYears[i].type} $i";
+            .toList()[i]
+            .toString();
+
       case YearType.heisei:
-        final heiseiYears = YearFactory.getYears()
+        return YearFactory.getYears()
             .where((year) => year.type == YearType.heisei)
-            .toList();
-        return "${heiseiYears[i].year}-${heiseiYears[i].type} $i";
+            .toList()[i]
+            .toString();
+
       default:
         throw ArgumentError('Invalid YearType');
     }
   }
 
-  static int getSelectedYearIndex(String year, String yearType) {
-    switch (yearType) {
-      case YearType.english:
-        return YearFactory.getYears()
-            .indexWhere((y) => y.year.toString() == year);
-      case YearType.showa:
-        final showaYears = YearFactory.getYears()
-            .where((year) => year.type == YearType.showa)
-            .toList();
-        return showaYears.indexWhere((y) => y.year.toString() == year);
-      case YearType.reiwa:
-        final reiwaYears = YearFactory.getYears()
-            .where((year) => year.type == YearType.reiwa)
-            .toList();
-        return reiwaYears.indexWhere((y) => y.year.toString() == year);
-      case YearType.heisei:
-        final heiseiYears = YearFactory.getYears()
-            .where((year) => year.type == YearType.heisei)
-            .toList();
-        return heiseiYears.indexWhere((y) => y.year.toString() == year);
-      default:
-        throw ArgumentError('Invalid YearType');
-    }
+  static int getSelectedYearIndex(String year) {
+    String yearType = getDropDownInitialValue(year);
+    final splitYear = year.split("/")[0];
+    final yearList = YearFactory.getYears().where((y) {
+      return y.type == yearType;
+    }).toList();
+    return yearList.indexWhere((y) => y.year.contains(splitYear));
   }
 }
 
@@ -328,10 +321,14 @@ String getMonthName(int id) {
 }
 
 String getSelectedDateTime(String year, List dateTime, [String? languageCode]) {
-  if (languageCode == "ja") {
-    return "$year年${dateTime[1]}月${dateTime[0]}日";
+  String splitYear = year;
+  if (year.contains("-")) {
+    splitYear = year.split("-")[1];
   }
-  return "$year/${dateTime[1]}/${dateTime[0]}";
+  if (languageCode == "ja") {
+    return "$splitYear年${dateTime[1]}月${dateTime[0]}日";
+  }
+  return "$splitYear/${dateTime[1]}/${dateTime[0]}";
 }
 
 String getSelectedYearMonth(String year, int month, [String? languageCode]) {
@@ -360,4 +357,13 @@ String getCurrentYearMonth([String? languageCode]) {
   return languageCode == "ja"
       ? "$currentYear年$currentMonth月"
       : "${getMonthName(currentMonth)}, ${DateTime.now().year.toString()}";
+}
+
+String getDropDownInitialValue(String dropDownItems) {
+  if (dropDownItems.isEmpty) {
+    YearType.english;
+  } else if (dropDownItems.contains(" ")) {
+    return dropDownItems.split(" ")[0];
+  }
+  return YearType.english;
 }

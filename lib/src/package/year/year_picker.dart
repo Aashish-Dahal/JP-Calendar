@@ -7,8 +7,7 @@ import '../widgets/day_year_button.dart';
 final selectedYearNotifier = ValueNotifier<int?>(null);
 
 class YearPicker extends StatefulWidget {
-  final String initialYear;
-  final String initialYearType;
+  final String initialValue;
   final YearCallback onYearChanged;
   final ValueNotifier<String> jpEnYearNotifier;
 
@@ -16,8 +15,7 @@ class YearPicker extends StatefulWidget {
     super.key,
     required this.jpEnYearNotifier,
     required this.onYearChanged,
-    this.initialYear = "",
-    this.initialYearType = YearType.english,
+    this.initialValue = "",
   });
 
   @override
@@ -29,10 +27,11 @@ class _YearPickerState extends State<YearPicker> {
 
   @override
   void initState() {
+    print(widget.initialValue);
     _scrollController = AutoScrollController();
-    if (widget.initialYear.isNotEmpty) {
-      int index = YearFactory.getSelectedYearIndex(
-          widget.initialYear, widget.initialYearType);
+    if (widget.initialValue.isNotEmpty) {
+      int index = YearFactory.getSelectedYearIndex(widget.initialValue);
+      print(index);
       _scrollController.scrollToIndex(index);
       selectedYearNotifier.value = index;
     }
