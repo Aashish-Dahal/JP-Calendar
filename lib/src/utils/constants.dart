@@ -1,6 +1,6 @@
 // year and date Time callback function
 typedef YearCallback = void Function(String year);
-typedef DateTimeCallback = void Function(Map<String, String> dateTime);
+typedef DateTimeCallback = void Function(String dateTime);
 
 // Japanese and english year type
 class YearType {
@@ -327,18 +327,11 @@ String getMonthName(int id) {
   return months.firstWhere((day) => day.id == id).name.substring(0, 3);
 }
 
-Map<String, String> getSelectedDateTime(String year, List dateTime,
-    [String? languageCode]) {
+String getSelectedDateTime(String year, List dateTime, [String? languageCode]) {
   if (languageCode == "ja") {
-    return {
-      "$year年${dateTime[1]}月${dateTime[0]}日":
-          "${year.split("-")[0]}/${dateTime[1]}/${dateTime[0]}",
-    };
+    return "$year年${dateTime[1]}月${dateTime[0]}日";
   }
-  return {
-    "$year/${dateTime[1]}/${dateTime[0]}":
-        "${year.split("-")[0]}/${dateTime[1]}/${dateTime[0]}",
-  };
+  return "$year/${dateTime[1]}/${dateTime[0]}";
 }
 
 String getSelectedYearMonth(String year, int month, [String? languageCode]) {
