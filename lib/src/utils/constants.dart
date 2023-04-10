@@ -150,9 +150,15 @@ class YearFactory {
     }
   }
 
-  static int getSelectedYearIndex(String year) {
+  static int getSelectedYearIndex(String year, [String? languageCode]) {
     String yearType = getDropDownInitialValue(year);
-    final splitYear = year.split("/")[0];
+    String splitYear;
+
+    if (languageCode == "en") {
+      splitYear = year.split("/")[0];
+    } else {
+      splitYear = year.split("年")[0];
+    }
     final yearList = YearFactory.getYears().where((y) {
       return y.type == yearType;
     }).toList();
