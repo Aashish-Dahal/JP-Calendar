@@ -29,12 +29,10 @@ class _YearPickerState extends State<YearPicker> {
 
   @override
   void initState() {
-    print(widget.initialValue);
     _scrollController = AutoScrollController();
     if (widget.initialValue.isNotEmpty) {
       int index = YearFactory.getSelectedYearIndex(
           widget.initialValue, widget.languageCode);
-      print(index);
       _scrollController.scrollToIndex(index);
       selectedYearNotifier.value = index;
     }
