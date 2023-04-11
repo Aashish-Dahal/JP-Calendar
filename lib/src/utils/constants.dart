@@ -333,9 +333,10 @@ String getSelectedDateTime(String year, List dateTime, [String? languageCode]) {
   if (year.contains("-")) {
     splitYear = year.split("-")[1];
   }
-  if (languageCode == "ja") {
+  if (languageCode == "ja" || year.contains("-")) {
     return "$splitYear年${dateTime[1]}月${dateTime[0]}日";
   }
+
   return "$splitYear-${dateTime[1]}-${dateTime[0]}";
 }
 
