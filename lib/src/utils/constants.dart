@@ -2,6 +2,8 @@
 typedef YearCallback = void Function(String year);
 typedef DateTimeCallback = void Function(String dateTime);
 
+enum CalendarType { EN, JP }
+
 // Japanese and english year type
 class YearType {
   static const String english = "english";
@@ -150,8 +152,9 @@ class YearFactory {
     }
   }
 
-  static int getSelectedYearIndex(String year, [String? languageCode]) {
-    String yearType = getDropDownInitialValue(year);
+  static int getSelectedYearIndex(String year, CalendarType type,
+      [String? languageCode]) {
+    String yearType = getDropDownInitialValue(year, type);
     String splitYear;
     if (languageCode == "en") {
       splitYear = year.split("/")[0];
@@ -333,7 +336,7 @@ String getSelectedDateTime(String year, List dateTime, [String? languageCode]) {
   if (languageCode == "ja") {
     return "$splitYear年${dateTime[1]}月${dateTime[0]}日";
   }
-  return "$splitYear/${dateTime[1]}/${dateTime[0]}";
+  return "$splitYear-${dateTime[1]}-${dateTime[0]}";
 }
 
 String getSelectedYearMonth(String year, int month, [String? languageCode]) {
@@ -364,11 +367,87 @@ String getCurrentYearMonth([String? languageCode]) {
       : "${getMonthName(currentMonth)}, ${DateTime.now().year.toString()}";
 }
 
-String getDropDownInitialValue(String dropDownItems) {
+String getDropDownInitialValue(String dropDownItems, CalendarType type) {
   if (dropDownItems.isEmpty) {
     YearType.english;
+  } else if (dropDownItems.contains("-") && type == CalendarType.JP) {
+    String jpDate = JPDateFormatter.parseToJPEra(dropDownItems);
+    return jpDate.split(" ")[0];
   } else if (dropDownItems.contains(" ")) {
     return dropDownItems.split(" ")[0];
   }
   return YearType.english;
+}
+
+class JPDateFormatter {
+  static String parseToJPEra(String dateStr) {
+    DateTime date = DateTime.parse(dateStr);
+    int year = date.year;
+    int month = date.month;
+    int day = date.day;
+    String era = "";
+    String eraYearStr = "";
+    int eraYear = 0;
+
+    if (year >= 2019) {
+      era = "令和";
+      eraYear = year - 2018;
+    } else if (year >= 1989) {
+      era = "平成";
+      eraYear = year - 1988;
+    } else if (year >= 1927) {
+      era = "昭和";
+      eraYear = year - 1925;
+    } else if (year >= 1912) {
+      era = "大正";
+      eraYear = year - 1911;
+    } else if (year >= 1868) {
+      era = "明治";
+      eraYear = year - 1867;
+    }
+
+    if (eraYear > 0) {
+      if (eraYear == 1) {
+        eraYearStr = "1";
+      } else {
+        eraYearStr = eraYear.toString();
+      }
+      return "$era $eraYearStr年$month月$day日";
+    } else {
+      return dateStr;
+    }
+  }
+
+  static String parseToGregorian(String japaneseEraDate) {
+    List<String> parts =
+        japaneseEraDate.replaceAll(" ", "").split(RegExp(r'(?<=\D)(?=\d)'));
+    int startYear;
+    switch (parts[0]) {
+      case '明治':
+        startYear = 1868;
+        break;
+      case '大正':
+        startYear = 1912;
+        break;
+      case '昭和':
+        startYear = 1926;
+        break;
+      case '平成':
+        startYear = 1989;
+        break;
+      case '令和':
+        startYear = 2019;
+        break;
+      default:
+        throw const FormatException('Invalid era name');
+    }
+    // Convert the year/month/day parts to integers
+    int eraYear = int.parse(parts[1].split(RegExp(r'[年]'))[0]);
+    int month = int.parse(parts[2].split(RegExp(r'[月]'))[0]);
+    int day = int.parse(parts[3].split(RegExp(r'[日]'))[0]);
+    // Calculate the corresponding Gregorian year
+    int gregorianYear = startYear + eraYear - 1;
+    // Format the result as a string in the YYYY/MM/DD format
+    return '$gregorianYear-${month.toString().padLeft(2, '0')}-${day.toString().padLeft(2, '0')}';
+  }
 }

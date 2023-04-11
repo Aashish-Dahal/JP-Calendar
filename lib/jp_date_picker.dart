@@ -10,12 +10,14 @@ import 'package:jp_calendar/src/package/year/year_picker.dart' as ENJP;
 import 'package:jp_calendar/src/utils/constants.dart';
 
 class JPDateTimePicker extends StatefulWidget {
+  final CalendarType type;
   final String initialValue;
   final String languageCode;
   final DateTimeCallback dateTimeCallback;
 
   const JPDateTimePicker(
       {super.key,
+      this.type = CalendarType.EN,
       required this.dateTimeCallback,
       this.languageCode = "en",
       this.initialValue = ''});
@@ -39,8 +41,8 @@ class _JPDateTimePickerState extends State<JPDateTimePicker> {
     YearFactory.getYears();
     _monthPageController = PageController(initialPage: 0);
     _pageController = PageController(initialPage: 0);
-    dropDownJPERaListener =
-        ValueNotifier<String>(getDropDownInitialValue(widget.initialValue));
+    dropDownJPERaListener = ValueNotifier<String>(
+        getDropDownInitialValue(widget.initialValue, widget.type));
     super.initState();
   }
 
@@ -96,6 +98,7 @@ class _JPDateTimePickerState extends State<JPDateTimePicker> {
                       physics: const NeverScrollableScrollPhysics(),
                       children: [
                         ENJP.YearPicker(
+                          type: widget.type,
                           languageCode: widget.languageCode,
                           initialValue: widget.initialValue,
                           jpEnYearNotifier: dropDownJPERaListener,
