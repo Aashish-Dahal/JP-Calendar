@@ -157,7 +157,7 @@ class YearFactory {
     String yearType = getDropDownInitialValue(year, type);
     String splitYear;
     if (languageCode == "en") {
-      splitYear = year.split("/")[0];
+      splitYear = year.split("-")[0];
     } else {
       splitYear = year.split("年")[0];
     }
