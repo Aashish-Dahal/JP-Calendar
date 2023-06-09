@@ -42,7 +42,7 @@ class YearFactory {
     final now = DateTime.now().year;
 
     final englishYears = List.generate(
-        now - 1950 + 1, (i) => Year("${i + 1950}", YearType.english));
+        now - 1926 + 1, (i) => Year("${i + 1950}", YearType.english));
 
     final showaYears = List.generate(1989 - 1927 + 1,
         (i) => Year("${i + 1926}-${YearType.showa} ${i + 1}", YearType.showa));
